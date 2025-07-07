@@ -1,0 +1,918 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Comparatives & Superlatives</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f0f4f8;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        .draggable {
+            cursor: grab;
+            user-select: none;
+        }
+        .draggable:active {
+            cursor: grabbing;
+        }
+        .droppable {
+            transition: all 0.2s ease;
+        }
+        .droppable.highlight {
+            background-color: #e0f2fe !important;
+            transform: scale(1.02);
+        }
+        .warning {
+            animation: shake 0.5s;
+        }
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            20%, 60% { transform: translateX(-5px); }
+            40%, 80% { transform: translateX(5px); }
+        }
+        .success-animation {
+            animation: success-pulse 0.5s;
+        }
+        @keyframes success-pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        .shuffle-animation {
+            animation: shuffle 0.8s ease-in-out;
+        }
+        @keyframes shuffle {
+            0% { transform: translateX(0) translateY(0) rotate(0deg); }
+            25% { transform: translateX(10px) translateY(-10px) rotate(5deg); }
+            50% { transform: translateX(-5px) translateY(5px) rotate(-3deg); }
+            75% { transform: translateX(5px) translateY(-5px) rotate(2deg); }
+            100% { transform: translateX(0) translateY(0) rotate(0deg); }
+        }
+        .main-content {
+            flex: 1;
+        }
+        footer {
+            margin-top: auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="main-content container mx-auto px-4 py-8">
+        <!-- Header -->
+        <header class="text-center mb-8">
+            <h1 class="text-3xl font-bold text-indigo-800">Comparatives & Superlatives</h1>
+        </header>
+
+        <!-- Game Container -->
+        <div class="max-w-4xl mx-auto">
+            <!-- Tabs -->
+            <div class="mb-8">
+                <div class="flex border-b border-indigo-200">
+                    <button id="learn-tab" class="px-6 py-3 font-medium text-indigo-800 bg-indigo-100 rounded-t-lg">Learn</button>
+                    <button id="practice-tab" class="px-6 py-3 font-medium text-indigo-500 hover:text-indigo-800">Practice</button>
+                    <button id="challenge-tab" class="px-6 py-3 font-medium text-indigo-500 hover:text-indigo-800">Challenge</button>
+                </div>
+            </div>
+
+            <!-- Learn Section -->
+            <div id="learn-section" class="bg-white rounded-lg shadow-lg p-6">
+                <h2 class="text-2xl font-bold text-indigo-800 mb-4">Comparative & Superlative Forms</h2>
+                <p class="mb-4">比較級和最高級形容詞/副詞的用法和規則</p>
+
+                <div class="mb-8">
+                    <h3 class="text-xl font-semibold text-indigo-700 mb-2">Basic Rules for Adjectives 形容詞基本規則</h3>
+                    <div class="bg-indigo-50 p-4 rounded-lg">
+                        <table class="w-full border-collapse">
+                            <thead>
+                                <tr class="bg-indigo-200">
+                                    <th class="p-2 text-left">Type 類型</th>
+                                    <th class="p-2 text-left">Adjective 形容詞</th>
+                                    <th class="p-2 text-left">Comparative 比較級</th>
+                                    <th class="p-2 text-left">Superlative 最高級</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="border-b border-indigo-100">
+                                    <td class="p-2">Short (1 syllable)<br>短音節</td>
+                                    <td class="p-2">tall 高的</td>
+                                    <td class="p-2">taller 更高的</td>
+                                    <td class="p-2">tallest 最高的</td>
+                                </tr>
+                                <tr class="border-b border-indigo-100">
+                                    <td class="p-2">Short ending in -e<br>以-e結尾</td>
+                                    <td class="p-2">nice 好的</td>
+                                    <td class="p-2">nicer 更好的</td>
+                                    <td class="p-2">nicest 最好的</td>
+                                </tr>
+                                <tr class="border-b border-indigo-100">
+                                    <td class="p-2">Short (CVC pattern)<br>子音-母音-子音</td>
+                                    <td class="p-2">big 大的</td>
+                                    <td class="p-2">bigger 更大的</td>
+                                    <td class="p-2">biggest 最大的</td>
+                                </tr>
+                                <tr class="border-b border-indigo-100">
+                                    <td class="p-2">2 syllables ending in -y<br>以-y結尾的雙音節</td>
+                                    <td class="p-2">happy 快樂的</td>
+                                    <td class="p-2">happier 更快樂的</td>
+                                    <td class="p-2">happiest 最快樂的</td>
+                                </tr>
+                                <tr class="border-b border-indigo-100">
+                                    <td class="p-2">2+ syllables<br>雙音節或更多</td>
+                                    <td class="p-2">beautiful 美麗的</td>
+                                    <td class="p-2">more beautiful 更美麗的</td>
+                                    <td class="p-2">most beautiful 最美麗的</td>
+                                </tr>
+                                <tr>
+                                    <td class="p-2">Irregular<br>不規則</td>
+                                    <td class="p-2">good 好的</td>
+                                    <td class="p-2">better 更好的</td>
+                                    <td class="p-2">best 最好的</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="mb-8">
+                    <h3 class="text-xl font-semibold text-indigo-700 mb-2">Rules for Adverbs 副詞規則</h3>
+                    <div class="bg-indigo-50 p-4 rounded-lg">
+                        <table class="w-full border-collapse">
+                            <thead>
+                                <tr class="bg-indigo-200">
+                                    <th class="p-2 text-left">Type 類型</th>
+                                    <th class="p-2 text-left">Adverb 副詞</th>
+                                    <th class="p-2 text-left">Comparative 比較級</th>
+                                    <th class="p-2 text-left">Superlative 最高級</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="border-b border-indigo-100">
+                                    <td class="p-2">Adverbs ending in -ly<br>以-ly結尾的副詞</td>
+                                    <td class="p-2">quickly 快速地</td>
+                                    <td class="p-2">more quickly 更快速地</td>
+                                    <td class="p-2">most quickly 最快速地</td>
+                                </tr>
+                                <tr class="border-b border-indigo-100">
+                                    <td class="p-2">Short adverbs<br>短副詞</td>
+                                    <td class="p-2">fast 快地</td>
+                                    <td class="p-2">faster 更快地</td>
+                                    <td class="p-2">fastest 最快地</td>
+                                </tr>
+                                <tr>
+                                    <td class="p-2">Irregular<br>不規則</td>
+                                    <td class="p-2">well 好地</td>
+                                    <td class="p-2">better 更好地</td>
+                                    <td class="p-2">best 最好地</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <p class="mt-3 text-indigo-800">
+                            <strong>Note 注意:</strong> Most adverbs that end in -ly use "more" and "most" rather than adding -er or -est.
+                            <br>大多數以-ly結尾的副詞使用"more"和"most"，而不是添加-er或-est。
+                        </p>
+                    </div>
+                </div>
+
+                <div class="mb-8">
+                    <h3 class="text-xl font-semibold text-indigo-700 mb-2">Common Irregular Forms 常見不規則形式</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="bg-indigo-50 p-4 rounded-lg">
+                            <ul class="list-disc pl-5">
+                                <li>good → better → best (好的 → 更好的 → 最好的)</li>
+                                <li>bad → worse → worst (壞的 → 更壞的 → 最壞的)</li>
+                                <li>far → farther/further → farthest/furthest (遠的 → 更遠的 → 最遠的)</li>
+                                <li>little → less → least (少的 → 更少的 → 最少的)</li>
+                                <li>many/much → more → most (多的 → 更多的 → 最多的)</li>
+                            </ul>
+                        </div>
+                        <div class="bg-indigo-50 p-4 rounded-lg">
+                            <ul class="list-disc pl-5">
+                                <li>old → older/elder → oldest/eldest (老的 → 更老的 → 最老的)</li>
+                                <li>well → better → best (好的 → 更好的 → 最好的)</li>
+                                <li>badly → worse → worst (糟糕地 → 更糟糕地 → 最糟糕地)</li>
+                                <li>late → later → latest/last (晚的 → 更晚的 → 最晚的)</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mb-8">
+                    <h3 class="text-xl font-semibold text-indigo-700 mb-2">Usage 用法</h3>
+                    <div class="bg-indigo-50 p-4 rounded-lg mb-4">
+                        <h4 class="font-medium text-indigo-800 mb-2">Comparative 比較級</h4>
+                        <p class="mb-2">Used to compare two things or people. 用於比較兩個事物或人。</p>
+                        <ul class="list-disc pl-5 mb-2">
+                            <li>She is <span class="font-bold">taller than</span> her brother. (她比她的兄弟高。)</li>
+                            <li>This book is <span class="font-bold">more interesting than</span> that one. (這本書比那本更有趣。)</li>
+                            <li>He runs <span class="font-bold">faster than</span> his friend. (他跑得比他的朋友快。)</li>
+                            <li>She speaks <span class="font-bold">more clearly than</span> the other presenter. (她說話比其他演講者更清晰。)</li>
+                        </ul>
+                    </div>
+                    <div class="bg-indigo-50 p-4 rounded-lg mb-4">
+                        <h4 class="font-medium text-indigo-800 mb-2">Superlative 最高級</h4>
+                        <p class="mb-2">Used to compare one thing or person with all others in a group. 用於將一個事物或人與群體中的所有其他事物或人進行比較。</p>
+                        <ul class="list-disc pl-5 mb-2">
+                            <li>She is <span class="font-bold">the tallest</span> in her family. (她是她家中最高的。)</li>
+                            <li>This is <span class="font-bold">the most interesting</span> book I've ever read. (這是我讀過的最有趣的書。)</li>
+                            <li>He runs <span class="font-bold">the fastest</span> in his class. (他在班上跑得最快。)</li>
+                            <li>She speaks <span class="font-bold">the most clearly</span> of all the presenters. (她是所有演講者中說話最清晰的。)</li>
+                        </ul>
+                    </div>
+                    <div class="bg-indigo-50 p-4 rounded-lg">
+                        <h4 class="font-medium text-indigo-800 mb-2">The Use of "The" with Superlatives 使用"The"與最高級</h4>
+                        <p class="mb-2">We almost always use "the" before superlative adjectives and adverbs. 我們幾乎總是在最高級形容詞和副詞前使用"the"。</p>
+                        <ul class="list-disc pl-5 mb-2">
+                            <li><span class="font-bold">The tallest</span> building in the city is the Taipei 101. (城市中最高的建築是台北101。)</li>
+                            <li>This is <span class="font-bold">the best</span> restaurant in town. (這是鎮上最好的餐廳。)</li>
+                            <li>She runs <span class="font-bold">the fastest</span> of all the students. (她在所有學生中跑得最快。)</li>
+                        </ul>
+                        <p class="mb-2">Exceptions 例外情況:</p>
+                        <ul class="list-disc pl-5">
+                            <li>When the superlative is a predicate adjective after a linking verb like "is", "was", etc., "the" is sometimes omitted in informal speech.
+                                <br>當最高級是連繫動詞（如"is"、"was"等）後的表語形容詞時，在非正式口語中有時會省略"the"。
+                                <br>Example: Her smile was (the) brightest when she saw her family. (當她看到家人時，她的笑容最燦爛。)
+                            </li>
+                            <li>In possessive constructions, "the" may be replaced by a possessive.
+                                <br>在所有格結構中，"the"可能被所有格取代。
+                                <br>Example: She is my best friend. (她是我最好的朋友。)
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="mb-8">
+                    <h3 class="text-xl font-semibold text-indigo-700 mb-2">Special Cases 特殊情況</h3>
+                    <div class="bg-indigo-50 p-4 rounded-lg">
+                        <h4 class="font-medium text-indigo-800 mb-2">When NOT to use comparatives and superlatives 何時不使用比較級和最高級</h4>
+                        <ul class="list-disc pl-5">
+                            <li class="mb-2">
+                                <span class="font-bold">Absolute adjectives</span> (絕對形容詞): Some adjectives describe qualities that cannot logically be compared because they are already absolute.
+                                <br>Examples: perfect, unique, complete, dead, pregnant
+                                <br>❌ This solution is more perfect. (這個解決方案更完美。)
+                                <br>✅ This solution is perfect. (這個解決方案是完美的。)
+                            </li>
+                            <li class="mb-2">
+                                <span class="font-bold">Equal comparisons</span> (相等比較): Use "as...as" instead of comparative forms.
+                                <br>✅ She is as tall as her brother. (她和她的兄弟一樣高。)
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <button id="go-to-practice" class="bg-indigo-600 text-white px-6 py-2 rounded-lg hover:bg-indigo-700 transition duration-300">
+                    Start Practice
+                </button>
+            </div>
+
+            <!-- Practice Section -->
+            <div id="practice-section" class="bg-white rounded-lg shadow-lg p-6 hidden">
+                <h2 class="text-2xl font-bold text-indigo-800 mb-4">Practice: Form the Correct Comparative or Superlative</h2>
+                <p class="mb-6">Drag the correct form to complete each sentence. 拖動正確的形式來完成每個句子。</p>
+
+                <div class="mb-8">
+                    <div id="practice-question" class="text-lg font-medium text-indigo-800 mb-4"></div>
+                    
+                    <div id="sentence-container" class="bg-indigo-50 p-4 rounded-lg mb-6 min-h-[60px] flex items-center text-lg"></div>
+                    
+                    <div id="options-container" class="flex flex-wrap gap-2 mb-6"></div>
+                    
+                    <div class="flex justify-between">
+                        <button id="check-answer" class="bg-indigo-600 text-white px-6 py-2 rounded-lg hover:bg-indigo-700 transition duration-300">
+                            Check Answer
+                        </button>
+                        <button id="next-question" class="bg-indigo-600 text-white px-6 py-2 rounded-lg hover:bg-indigo-700 transition duration-300 hidden">
+                            Next Question
+                        </button>
+                    </div>
+                </div>
+
+                <div id="feedback" class="p-4 rounded-lg mb-6 hidden"></div>
+                
+                <div class="flex justify-between">
+                    <button id="back-to-learn" class="text-indigo-600 hover:text-indigo-800 transition duration-300">
+                        ← Back to Learn
+                    </button>
+                    <button id="go-to-challenge" class="text-indigo-600 hover:text-indigo-800 transition duration-300">
+                        Go to Challenge →
+                    </button>
+                </div>
+            </div>
+
+            <!-- Challenge Section -->
+            <div id="challenge-section" class="bg-white rounded-lg shadow-lg p-6 hidden">
+                <h2 class="text-2xl font-bold text-indigo-800 mb-4">Challenge: Create Correct Sentences</h2>
+                <p class="mb-6">Arrange the words to form correct comparative or superlative sentences. 排列單詞以形成正確的比較級或最高級句子。</p>
+
+                <div class="mb-8">
+                    <div id="challenge-instruction" class="text-lg font-medium text-indigo-800 mb-4"></div>
+                    
+                    <div id="word-bank" class="flex flex-wrap gap-2 mb-6 bg-indigo-50 p-4 rounded-lg"></div>
+                    
+                    <div id="sentence-builder" class="bg-indigo-100 p-4 rounded-lg mb-6 min-h-[80px] flex flex-wrap gap-2 items-center"></div>
+                    
+                    <div class="flex justify-between">
+                        <button id="reset-sentence" class="bg-indigo-200 text-indigo-800 px-6 py-2 rounded-lg hover:bg-indigo-300 transition duration-300">
+                            Reset
+                        </button>
+                        <button id="check-sentence" class="bg-indigo-600 text-white px-6 py-2 rounded-lg hover:bg-indigo-700 transition duration-300">
+                            Check Sentence
+                        </button>
+                        <button id="next-challenge" class="bg-indigo-600 text-white px-6 py-2 rounded-lg hover:bg-indigo-700 transition duration-300 hidden">
+                            Next Challenge
+                        </button>
+                    </div>
+                </div>
+
+                <div id="challenge-feedback" class="p-4 rounded-lg mb-6 hidden"></div>
+                
+                <div class="flex justify-between">
+                    <button id="back-to-practice" class="text-indigo-600 hover:text-indigo-800 transition duration-300">
+                        ← Back to Practice
+                    </button>
+                    <div>
+                        <span id="score-display" class="font-medium text-indigo-800">Score: 0</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-indigo-800 text-indigo-100 py-6 mt-8">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row justify-center items-center space-y-4 md:space-y-0">
+                <!-- Links -->
+                <div class="flex items-center space-x-4">
+                    <a href="https://www.aaronshi.cc" target="_blank" rel="noopener noreferrer" class="flex items-center hover:text-white transition duration-300">
+                        Go to AaronShi.cc
+                    </a>
+                    <span class="text-indigo-300">|</span>
+                    <a href="https://app.aaronshi.cc" target="_blank" rel="noopener noreferrer" class="flex items-center hover:text-white transition duration-300">
+                        Back to AaronShi.cc App
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Tab switching functionality
+        document.getElementById('learn-tab').addEventListener('click', () => switchTab('learn'));
+        document.getElementById('practice-tab').addEventListener('click', () => switchTab('practice'));
+        document.getElementById('challenge-tab').addEventListener('click', () => switchTab('challenge'));
+        document.getElementById('go-to-practice').addEventListener('click', () => switchTab('practice'));
+        document.getElementById('back-to-learn').addEventListener('click', () => switchTab('learn'));
+        document.getElementById('go-to-challenge').addEventListener('click', () => switchTab('challenge'));
+        document.getElementById('back-to-practice').addEventListener('click', () => switchTab('practice'));
+
+        function switchTab(tabName) {
+            // Hide all sections
+            document.getElementById('learn-section').classList.add('hidden');
+            document.getElementById('practice-section').classList.add('hidden');
+            document.getElementById('challenge-section').classList.add('hidden');
+            
+            // Reset tab styles
+            document.getElementById('learn-tab').classList.remove('bg-indigo-100', 'text-indigo-800');
+            document.getElementById('practice-tab').classList.remove('bg-indigo-100', 'text-indigo-800');
+            document.getElementById('challenge-tab').classList.remove('bg-indigo-100', 'text-indigo-800');
+            
+            document.getElementById('learn-tab').classList.add('text-indigo-500');
+            document.getElementById('practice-tab').classList.add('text-indigo-500');
+            document.getElementById('challenge-tab').classList.add('text-indigo-500');
+            
+            // Show selected section and style tab
+            document.getElementById(`${tabName}-section`).classList.remove('hidden');
+            document.getElementById(`${tabName}-tab`).classList.add('bg-indigo-100', 'text-indigo-800');
+            document.getElementById(`${tabName}-tab`).classList.remove('text-indigo-500');
+            
+            // Initialize content if needed
+            if (tabName === 'practice' && !practiceInitialized) {
+                initializePractice();
+                practiceInitialized = true;
+            } else if (tabName === 'challenge' && !challengeInitialized) {
+                initializeChallenge();
+                challengeInitialized = true;
+            }
+        }
+
+        // Practice section functionality
+        let practiceQuestions = [
+            {
+                sentence: "The elephant is ____ animal in the zoo.",
+                options: ["the biggest", "bigger", "more big"],
+                correctAnswer: "the biggest",
+                explanation: "We use the superlative form 'the biggest' because we're comparing one animal to all others in the zoo. Note that we use 'the' before the superlative."
+            },
+            {
+                sentence: "Learning a language is ____ than most people think.",
+                options: ["more easy", "easier", "the easiest"],
+                correctAnswer: "easier",
+                explanation: "We use the comparative form 'easier' because we're comparing two things: the actual difficulty of learning a language versus what people think."
+            },
+            {
+                sentence: "This is ____ book I've ever read.",
+                options: ["more interesting", "interestinger", "the most interesting"],
+                correctAnswer: "the most interesting",
+                explanation: "We use 'the most interesting' because it's a superlative comparing one book to all others the person has read. Also, 'interesting' has 3 syllables, so we use 'most' instead of adding '-er'."
+            },
+            {
+                sentence: "My brother is ____ than me.",
+                options: ["more tall", "taller", "the tallest"],
+                correctAnswer: "taller",
+                explanation: "We use the comparative form 'taller' because we're comparing two people. For short adjectives like 'tall', we add '-er'."
+            },
+            {
+                sentence: "This solution is ____.",
+                options: ["more perfect", "perfecter", "perfect"],
+                correctAnswer: "perfect",
+                explanation: "We don't use comparative or superlative forms with absolute adjectives like 'perfect'. Something is either perfect or it's not."
+            },
+            {
+                sentence: "Today is ____ day of the year so far.",
+                options: ["the hottest", "hotter", "more hot"],
+                correctAnswer: "the hottest",
+                explanation: "We use the superlative form 'the hottest' because we're comparing one day to all other days of the year. Note that we use 'the' before the superlative."
+            },
+            {
+                sentence: "She speaks ____ than her sister.",
+                options: ["more clearly", "clearlier", "the most clearly"],
+                correctAnswer: "more clearly",
+                explanation: "We use 'more clearly' because we're comparing two people, and 'clearly' is an adverb ending in -ly, so we use 'more' instead of adding '-er'."
+            },
+            {
+                sentence: "He runs ____ in his class.",
+                options: ["faster", "more fast", "the fastest"],
+                correctAnswer: "the fastest",
+                explanation: "We use 'the fastest' because it's a superlative comparing one person to all others in the class. For short adverbs like 'fast', we add '-est' for the superlative."
+            },
+            {
+                sentence: "She feels ____ today than she did yesterday.",
+                options: ["better", "more good", "the best"],
+                correctAnswer: "better",
+                explanation: "We use the irregular comparative form 'better' (from 'good') because we're comparing how she feels on two different days."
+            },
+            {
+                sentence: "Of all the presentations, hers was ____ delivered.",
+                options: ["more professionally", "professionally", "the most professionally"],
+                correctAnswer: "the most professionally",
+                explanation: "We use 'the most professionally' because it's a superlative comparing one presentation to all others. For adverbs ending in -ly, we use 'the most' for the superlative."
+            }
+        ];
+
+        let currentPracticeQuestion = 0;
+        let practiceInitialized = false;
+
+        function initializePractice() {
+            loadPracticeQuestion(currentPracticeQuestion);
+            document.getElementById('check-answer').addEventListener('click', checkPracticeAnswer);
+            document.getElementById('next-question').addEventListener('click', nextPracticeQuestion);
+        }
+
+        function loadPracticeQuestion(index) {
+            const question = practiceQuestions[index];
+            const sentenceContainer = document.getElementById('sentence-container');
+            const optionsContainer = document.getElementById('options-container');
+            
+            // Reset containers
+            sentenceContainer.innerHTML = '';
+            optionsContainer.innerHTML = '';
+            document.getElementById('feedback').classList.add('hidden');
+            document.getElementById('check-answer').classList.remove('hidden');
+            document.getElementById('next-question').classList.add('hidden');
+            
+            // Create sentence with blank
+            const sentenceParts = question.sentence.split('____');
+            sentenceContainer.appendChild(document.createTextNode(sentenceParts[0]));
+            
+            const blankSpace = document.createElement('span');
+            blankSpace.id = 'answer-blank';
+            blankSpace.className = 'droppable inline-block min-w-[100px] min-h-[30px] border-b-2 border-indigo-500 mx-1';
+            sentenceContainer.appendChild(blankSpace);
+            
+            sentenceContainer.appendChild(document.createTextNode(sentenceParts[1]));
+            
+            // Create options
+            const shuffledOptions = [...question.options].sort(() => Math.random() - 0.5);
+            shuffledOptions.forEach(option => {
+                const optionElement = document.createElement('div');
+                optionElement.className = 'draggable bg-indigo-200 px-3 py-1 rounded-lg cursor-grab';
+                optionElement.textContent = option;
+                optionElement.draggable = true;
+                optionElement.addEventListener('dragstart', dragStart);
+                optionsContainer.appendChild(optionElement);
+            });
+            
+            // Set up drop zone
+            const dropZone = document.getElementById('answer-blank');
+            dropZone.addEventListener('dragover', dragOver);
+            dropZone.addEventListener('dragleave', dragLeave);
+            dropZone.addEventListener('drop', drop);
+            
+            // Update question counter
+            document.getElementById('practice-question').textContent = `Question ${index + 1} of ${practiceQuestions.length}`;
+        }
+
+        function dragStart(e) {
+            e.dataTransfer.setData('text/plain', e.target.textContent);
+            e.target.classList.add('opacity-50');
+        }
+
+        function dragOver(e) {
+            e.preventDefault();
+            if (!e.target.classList.contains('highlight')) {
+                e.target.classList.add('highlight');
+            }
+        }
+
+        function dragLeave(e) {
+            e.target.classList.remove('highlight');
+        }
+
+        function drop(e) {
+            e.preventDefault();
+            e.target.classList.remove('highlight');
+            const data = e.dataTransfer.getData('text/plain');
+            e.target.textContent = data;
+            e.target.classList.add('bg-indigo-100', 'px-3', 'py-1', 'rounded-lg');
+            
+            // Remove the dragged element from options
+            const options = document.querySelectorAll('#options-container .draggable');
+            options.forEach(option => {
+                if (option.textContent === data) {
+                    option.classList.add('hidden');
+                }
+            });
+        }
+
+        function checkPracticeAnswer() {
+            const answerBlank = document.getElementById('answer-blank');
+            const userAnswer = answerBlank.textContent;
+            const correctAnswer = practiceQuestions[currentPracticeQuestion].correctAnswer;
+            const feedback = document.getElementById('feedback');
+            
+            if (userAnswer === correctAnswer) {
+                feedback.innerHTML = `
+                    <div class="bg-green-100 text-green-800 p-4 rounded-lg">
+                        <p class="font-bold">Correct! ✓</p>
+                        <p>${practiceQuestions[currentPracticeQuestion].explanation}</p>
+                    </div>
+                `;
+                answerBlank.classList.add('success-animation');
+            } else {
+                feedback.innerHTML = `
+                    <div class="bg-red-100 text-red-800 p-4 rounded-lg">
+                        <p class="font-bold">Not quite right. Try again!</p>
+                        <p>The correct answer is: "${correctAnswer}"</p>
+                        <p>${practiceQuestions[currentPracticeQuestion].explanation}</p>
+                    </div>
+                `;
+                answerBlank.classList.add('warning');
+            }
+            
+            feedback.classList.remove('hidden');
+            document.getElementById('check-answer').classList.add('hidden');
+            document.getElementById('next-question').classList.remove('hidden');
+            
+            // Remove animation classes after they play
+            setTimeout(() => {
+                answerBlank.classList.remove('success-animation', 'warning');
+            }, 500);
+        }
+
+        function nextPracticeQuestion() {
+            currentPracticeQuestion++;
+            if (currentPracticeQuestion < practiceQuestions.length) {
+                loadPracticeQuestion(currentPracticeQuestion);
+            } else {
+                // End of practice
+                document.getElementById('sentence-container').innerHTML = `
+                    <div class="w-full text-center py-4">
+                        <p class="text-xl font-bold text-indigo-800 mb-2">Practice Complete! 🎉</p>
+                        <p>You've completed all practice questions.</p>
+                        <p>Ready for a challenge?</p>
+                    </div>
+                `;
+                document.getElementById('options-container').innerHTML = '';
+                document.getElementById('feedback').classList.add('hidden');
+                document.getElementById('check-answer').classList.add('hidden');
+                document.getElementById('next-question').classList.add('hidden');
+                document.getElementById('go-to-challenge').classList.add('font-bold', 'text-indigo-800');
+            }
+        }
+
+        // Challenge section functionality
+        let challengeQuestions = [
+            {
+                instruction: "Create a comparative sentence using 'tall'",
+                words: ["is", "than", "taller", "my", "sister", "brother", "her"],
+                correctSentence: "my sister is taller than her brother"
+            },
+            {
+                instruction: "Create a superlative sentence using 'interesting'",
+                words: ["is", "the", "most", "interesting", "book", "I've", "this", "ever", "read"],
+                correctSentence: "this is the most interesting book i've ever read"
+            },
+            {
+                instruction: "Create a sentence with an absolute adjective",
+                words: ["solution", "is", "perfect", "the", "already"],
+                correctSentence: "the solution is already perfect"
+            },
+            {
+                instruction: "Create a comparative sentence with an adverb",
+                words: ["speaks", "more", "clearly", "than", "she", "I", "do"],
+                correctSentence: "she speaks more clearly than i do"
+            },
+            {
+                instruction: "Create a superlative sentence with an adverb",
+                words: ["the", "runs", "fastest", "in", "he", "class", "the"],
+                correctSentence: "he runs the fastest in the class"
+            },
+            {
+                instruction: "Create a comparative sentence with an irregular adjective",
+                words: ["is", "than", "better", "coffee", "tea", "for", "health", "your"],
+                correctSentence: "coffee is better than tea for your health"
+            },
+            {
+                instruction: "Create a superlative sentence",
+                words: ["the", "is", "tallest", "building", "in", "city", "this", "the"],
+                correctSentence: "this is the tallest building in the city"
+            }
+        ];
+
+        let currentChallengeQuestion = 0;
+        let challengeInitialized = false;
+        let score = 0;
+        let sentenceIsCorrect = false;
+
+        function initializeChallenge() {
+            loadChallengeQuestion(currentChallengeQuestion);
+            document.getElementById('reset-sentence').addEventListener('click', resetChallengeSentence);
+            document.getElementById('check-sentence').addEventListener('click', checkChallengeSentence);
+            document.getElementById('next-challenge').addEventListener('click', nextChallengeQuestion);
+        }
+
+        function loadChallengeQuestion(index) {
+            const challenge = challengeQuestions[index];
+            const wordBank = document.getElementById('word-bank');
+            const sentenceBuilder = document.getElementById('sentence-builder');
+            
+            // Reset containers
+            wordBank.innerHTML = '';
+            sentenceBuilder.innerHTML = '';
+            document.getElementById('challenge-feedback').classList.add('hidden');
+            document.getElementById('check-sentence').classList.remove('hidden');
+            document.getElementById('next-challenge').classList.add('hidden');
+            sentenceIsCorrect = false;
+            
+            // Create instruction
+            document.getElementById('challenge-instruction').textContent = `${index + 1}/${challengeQuestions.length}: ${challenge.instruction}`;
+            
+            // Create word bank
+            const shuffledWords = [...challenge.words].sort(() => Math.random() - 0.5);
+            shuffledWords.forEach(word => {
+                const wordElement = document.createElement('div');
+                wordElement.className = 'draggable bg-indigo-200 px-3 py-1 rounded-lg cursor-grab';
+                wordElement.textContent = word;
+                wordElement.draggable = true;
+                wordElement.addEventListener('dragstart', wordDragStart);
+                wordElement.addEventListener('click', () => moveWordToSentence(wordElement));
+                wordBank.appendChild(wordElement);
+            });
+            
+            // Set up sentence builder as drop zone
+            sentenceBuilder.addEventListener('dragover', sentenceDragOver);
+            sentenceBuilder.addEventListener('drop', sentenceDrop);
+        }
+
+        function wordDragStart(e) {
+            // Only allow dragging if the sentence is not yet correct
+            if (sentenceIsCorrect) {
+                e.preventDefault();
+                return;
+            }
+            
+            e.dataTransfer.setData('text/plain', e.target.textContent);
+            e.dataTransfer.setData('sourceId', e.target.parentElement.id);
+            e.target.classList.add('opacity-50');
+        }
+
+        function sentenceDragOver(e) {
+            // Only allow dropping if the sentence is not yet correct
+            if (sentenceIsCorrect) {
+                e.preventDefault();
+                return;
+            }
+            
+            e.preventDefault();
+            if (!e.target.classList.contains('highlight') && e.target.id === 'sentence-builder') {
+                e.target.classList.add('highlight');
+            }
+        }
+
+        function sentenceDrop(e) {
+            // Only allow dropping if the sentence is not yet correct
+            if (sentenceIsCorrect) {
+                e.preventDefault();
+                return;
+            }
+            
+            e.preventDefault();
+            const sentenceBuilder = document.getElementById('sentence-builder');
+            sentenceBuilder.classList.remove('highlight');
+            
+            const word = e.dataTransfer.getData('text/plain');
+            const sourceId = e.dataTransfer.getData('sourceId');
+            
+            // Create new word element in sentence builder
+            const wordElement = document.createElement('div');
+            wordElement.className = 'draggable bg-indigo-300 px-3 py-1 rounded-lg cursor-grab';
+            wordElement.textContent = word;
+            wordElement.draggable = true;
+            wordElement.addEventListener('dragstart', wordDragStart);
+            wordElement.addEventListener('click', () => moveWordToBank(wordElement));
+            sentenceBuilder.appendChild(wordElement);
+            
+            // Remove from source if it was from the word bank
+            if (sourceId === 'word-bank') {
+                const wordBank = document.getElementById('word-bank');
+                const words = wordBank.querySelectorAll('.draggable');
+                words.forEach(w => {
+                    if (w.textContent === word && !w.classList.contains('hidden')) {
+                        w.classList.add('hidden');
+                        return;
+                    }
+                });
+            }
+        }
+
+        function moveWordToSentence(wordElement) {
+            // Only allow moving if the sentence is not yet correct
+            if (sentenceIsCorrect) {
+                return;
+            }
+            
+            const sentenceBuilder = document.getElementById('sentence-builder');
+            
+            // Create new word element in sentence builder
+            const newWordElement = document.createElement('div');
+            newWordElement.className = 'draggable bg-indigo-300 px-3 py-1 rounded-lg cursor-grab';
+            newWordElement.textContent = wordElement.textContent;
+            newWordElement.draggable = true;
+            newWordElement.addEventListener('dragstart', wordDragStart);
+            newWordElement.addEventListener('click', () => moveWordToBank(newWordElement));
+            sentenceBuilder.appendChild(newWordElement);
+            
+            // Hide the word in the bank
+            wordElement.classList.add('hidden');
+        }
+
+        function moveWordToBank(wordElement) {
+            // Only allow moving if the sentence is not yet correct
+            if (sentenceIsCorrect) {
+                return;
+            }
+            
+            const wordBank = document.getElementById('word-bank');
+            const words = wordBank.querySelectorAll('.draggable');
+            
+            // Find and show the word in the bank
+            let found = false;
+            words.forEach(w => {
+                if (w.textContent === wordElement.textContent && w.classList.contains('hidden') && !found) {
+                    w.classList.remove('hidden');
+                    found = true;
+                }
+            });
+            
+            // Remove from sentence builder
+            wordElement.remove();
+        }
+
+        function resetChallengeSentence() {
+            // Only allow reset if the sentence is not yet correct
+            if (sentenceIsCorrect) {
+                return;
+            }
+            
+            const wordBank = document.getElementById('word-bank');
+            const sentenceBuilder = document.getElementById('sentence-builder');
+            
+            // Show all words in bank
+            const words = wordBank.querySelectorAll('.draggable');
+            words.forEach(w => w.classList.remove('hidden'));
+            
+            // Clear sentence builder
+            sentenceBuilder.innerHTML = '';
+            
+            // Hide feedback
+            document.getElementById('challenge-feedback').classList.add('hidden');
+        }
+
+        function checkChallengeSentence() {
+            const sentenceBuilder = document.getElementById('sentence-builder');
+            const words = sentenceBuilder.querySelectorAll('.draggable');
+            const userSentence = Array.from(words).map(w => w.textContent.toLowerCase()).join(' ');
+            const correctSentence = challengeQuestions[currentChallengeQuestion].correctSentence;
+            const feedback = document.getElementById('challenge-feedback');
+            
+            if (userSentence === correctSentence) {
+                feedback.innerHTML = `
+                    <div class="bg-green-100 text-green-800 p-4 rounded-lg">
+                        <p class="font-bold">Perfect! ✓</p>
+                        <p>Your sentence is correct: "${correctSentence}"</p>
+                    </div>
+                `;
+                sentenceBuilder.classList.add('success-animation');
+                score += 10;
+                document.getElementById('score-display').textContent = `Score: ${score}`;
+                
+                // Mark sentence as correct so it can't be modified
+                sentenceIsCorrect = true;
+                
+                // Make words in the sentence non-draggable and change their appearance
+                words.forEach(word => {
+                    word.draggable = false;
+                    word.classList.remove('draggable');
+                    word.classList.add('bg-green-200');
+                    word.style.cursor = 'default';
+                    
+                    // Remove click event listener
+                    const newWord = word.cloneNode(true);
+                    word.parentNode.replaceChild(newWord, word);
+                });
+                
+                // Hide word bank words
+                const wordBank = document.getElementById('word-bank');
+                wordBank.style.opacity = '0.5';
+                const bankWords = wordBank.querySelectorAll('div');
+                bankWords.forEach(word => {
+                    word.draggable = false;
+                    word.style.cursor = 'default';
+                    
+                    // Remove click event listener
+                    const newWord = word.cloneNode(true);
+                    word.parentNode.replaceChild(newWord, word);
+                });
+                
+                // Disable reset button
+                document.getElementById('reset-sentence').classList.add('opacity-50');
+            } else {
+                feedback.innerHTML = `
+                    <div class="bg-red-100 text-red-800 p-4 rounded-lg">
+                        <p class="font-bold">Not quite right.</p>
+                        <p>Your sentence: "${userSentence}"</p>
+                        <p>Try again!</p>
+                    </div>
+                `;
+                sentenceBuilder.classList.add('warning');
+            }
+            
+            feedback.classList.remove('hidden');
+            
+            if (sentenceIsCorrect) {
+                document.getElementById('check-sentence').classList.add('hidden');
+                document.getElementById('next-challenge').classList.remove('hidden');
+            }
+            
+            // Remove animation classes after they play
+            setTimeout(() => {
+                sentenceBuilder.classList.remove('success-animation', 'warning');
+            }, 500);
+        }
+
+        function nextChallengeQuestion() {
+            currentChallengeQuestion++;
+            if (currentChallengeQuestion < challengeQuestions.length) {
+                loadChallengeQuestion(currentChallengeQuestion);
+                
+                // Reset word bank opacity and reset button
+                document.getElementById('word-bank').style.opacity = '1';
+                document.getElementById('reset-sentence').classList.remove('opacity-50');
+            } else {
+                // End of challenge
+                document.getElementById('word-bank').innerHTML = '';
+                document.getElementById('sentence-builder').innerHTML = `
+                    <div class="w-full text-center py-4">
+                        <p class="text-xl font-bold text-indigo-800 mb-2">Challenge Complete! 🏆</p>
+                        <p>Final Score: ${score} points</p>
+                        <p class="mt-4">Great job mastering comparative and superlative forms!</p>
+                    </div>
+                `;
+                document.getElementById('challenge-feedback').classList.add('hidden');
+                document.getElementById('check-sentence').classList.add('hidden');
+                document.getElementById('next-challenge').classList.add('hidden');
+                document.getElementById('reset-sentence').classList.add('hidden');
+            }
+        }
+
+        // Initialize the app with the Learn tab
+        switchTab('learn');
+    </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'95acf09997774a91',t:'MTc1MTc4MjIzNS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
